@@ -17,15 +17,44 @@ st.title("📄 AI ATS Resume Analyzer")
 # -----------------------------
 # Load Environment Variables
 # -----------------------------
+# -----------------------------
+# Load Environment Variables
+# -----------------------------
 load_dotenv()
 
-api_key = os.getenv("OPENROUTER_API_KEY")
+try:
+    # Streamlit Cloud
+    api_key = st.secrets["OPENROUTER_API_KEY"]
+except Exception:
+    # Local Development (.env)
+    api_key = os.getenv("OPENROUTER_API_KEY")
 
 if api_key:
     st.success("✅ API Key Loaded Successfully")
 else:
-    st.error("❌ OPENROUTER_API_KEY not found in .env file")
+    st.error("❌ OPENROUTER_API_KEY not found")
+
+    st.info("""
+Local Development:
+Create a .env file:
+
+OPENROUTER_API_KEY=your_key
+
+Streamlit Cloud:
+Settings → Secrets
+
+OPENROUTER_API_KEY="your_key"
+""")
+
     st.stop()
+
+# -----------------------------
+# OpenRouter Client
+# -----------------------------
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=api_key
+)
 
 # -----------------------------
 # OpenRouter Client
