@@ -30,7 +30,7 @@ except Exception:
     api_key = os.getenv("OPENROUTER_API_KEY")
 
 # TEST LINE
-st.write("API Key Found:", bool(api_key))
+
 
 if api_key:
     st.success("✅ API Key Loaded Successfully")
